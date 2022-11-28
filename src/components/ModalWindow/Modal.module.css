@@ -2,13 +2,25 @@
   position: absolute;
   top: 20%;
   left: 25%;
+  display: flex;
+
   background: white;
   border: 1px solid #ccc;
   transition: 1.1s ease-out;
   box-shadow: -2rem 2rem 2rem white;
   z-index: 1;
 }
-
+.column {
+  display: inline-block;
+  min-height: 150px;
+  width: 33.33%;
+  border: 1px solid black;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
 .modalForm {
   position: absolute;
   top: 20%;
@@ -18,4 +30,36 @@
   transition: 1.1s ease-out;
   box-shadow: -2rem 2rem 2rem;
   z-index: 1;
+}
+.button {
+  background-color: white;
+  color: black;
+  border: 2px solid lightgray;
+}
+.modalInput {
+  z-index: 1;
+  width: 10vw;
+}
+
+.updateForm {
+  gap: 5px;
+  width: auto;
+  align-items: baseline;
+}
+
+@media screen and (max-width: 767px) {
+  .modal {
+    display: block;
+  }
+  .modalInput {
+    width: auto;
+  }
+  .modalForm {
+    position: inherit;
+  }
+  .column {
+    min-height: auto;
+    width: auto;
+    border: none;
+  }
 }

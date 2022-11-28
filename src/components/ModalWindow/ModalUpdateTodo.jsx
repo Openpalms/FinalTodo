@@ -2,6 +2,7 @@ import { UpdateTodo } from '../../HadleChanges/TodoCreation';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { HandleTodo } from '../../api/Todos';
+import s from './Modal.module.css';
 const ModalUpdateTodo = (props) => {
   const { name } = useParams();
   const {
@@ -20,18 +21,24 @@ const ModalUpdateTodo = (props) => {
     <>
       {isVisible ? (
         <>
-          <form onSubmit={(e) => SubmitForm(e, name, props.id)}>
+          <form
+            className={s.updateForm}
+            onSubmit={(e) => SubmitForm(e, name, props.id)}
+          >
             <input
+              className={s.modalInput}
               placeholder="Заголовок"
               onChange={ChangeTitle}
               value={title}
             />
             <input
+              className={s.modalInput}
               placeholder="Описание"
               onChange={ChangeDescription}
               value={description}
             />
             <input
+              className={s.modalInput}
               placeholder="Приоритет(1-10)"
               type="number"
               max="10"
@@ -39,10 +46,16 @@ const ModalUpdateTodo = (props) => {
               onChange={ChangePriority}
               value={priority}
             />
-            <input type="date" onChange={ChangeDate} value={date} />
-
-            <button>Добавить дело</button>
-            <button onClick={() => setIsVisible(false)}>Cancel update</button>
+            <input
+              className={s.modalInput}
+              type="date"
+              onChange={ChangeDate}
+              value={date}
+            />
+            <div>
+              <button>Update</button>
+              <button onClick={() => setIsVisible(false)}>Cancel</button>
+            </div>
           </form>
         </>
       ) : (

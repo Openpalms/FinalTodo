@@ -25,13 +25,10 @@ label {
   display: block;
 }
 
-button.active:after {
-  content: '';
-  display: block;
-  margin: 0 auto;
-  width: 50%;
-  padding-top: 4px;
-  border-bottom: 1px solid var(--primary-color);
+button {
+  background-color: white;
+  color: black;
+  border: 2px solid lightgray;
 }
 
 input:focus {

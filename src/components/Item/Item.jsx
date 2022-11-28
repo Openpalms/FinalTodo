@@ -24,17 +24,21 @@ const Item = (props) => {
         position={null}
         grid={[25, 25]}
         scale={1}
-        onStart={eventLogger}
+        handle=".handle"
+        onTouchEnd={eventLogger}
+        // onStart={eventLogger}
         onStop={eventLogger}
       >
-        <div className={isExriping}>
-          <h1>{props.completed ? 'Task done' : null}</h1>
+        <div className={`${isExriping} `}>
           <div className="handle">
-            #{props.taskNumber} {props.title}{' '}
+            <h1>{props.completed ? 'Task done' : null}</h1>
+            <div>
+              #{props.taskNumber} {props.title}{' '}
+            </div>
+            <div>{props.description}</div>
+            <div>Priority:{props.priority}</div>
+            <div>Expire date:{props.date}</div>
           </div>
-          <div>{props.description}</div>
-          <div>Priority:{props.priority}</div>
-          <div>Expire date:{props.date}</div>
           <hr />
           <button onClick={() => setModalShow(!modalShow)}>Open modal</button>
 

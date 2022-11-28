@@ -7,22 +7,28 @@ const Form = (props) => {
   const [isShowing, setIsShowing] = useState(false);
 
   return (
-    <div className={s.form}>
-      <div>
-        <NavLink to={`/`}>Go to project page</NavLink>
+    <>
+      <NavLink to={`/`}>Go to project page</NavLink>
+      <div className={s.form}>
+        <div className={s.btnWrap}>
+          <button
+            className={s.formButton}
+            onClick={() => setIsShowing(!isShowing)}
+          >
+            Добавить дело
+          </button>
+        </div>
+        <div className={s.btnWrap}>
+          <input
+            className={s.input}
+            placeholder="Filter Todos!"
+            onChange={(e) => props.setQuery(e.target.value.toLowerCase())}
+            value={props.query}
+          />
+        </div>
+        <ModalForm isShowing={isShowing} setIsShowing={setIsShowing} />
       </div>
-      <div>
-        <button onClick={() => setIsShowing(!isShowing)}>Добавить дело</button>
-      </div>
-      <div>
-        <label htmlFor="input">Filter todos</label>
-        <input
-          onChange={(e) => props.setQuery(e.target.value.toLowerCase())}
-          value={props.query}
-        />
-      </div>
-      <ModalForm isShowing={isShowing} setIsShowing={setIsShowing} />
-    </div>
+    </>
   );
 };
 

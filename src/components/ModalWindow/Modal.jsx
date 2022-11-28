@@ -18,114 +18,122 @@ const Modal = (props) => {
     <>
       {props.modalShow ? (
         <div className={s.modal}>
-          <button onClick={() => props.setModalShow(false)}>Close</button>
-          <h2>Add files</h2>
-          <ol>
-            {props.urls !== undefined
-              ? Object.keys(props.urls).map((key) => (
-                  <li key={key}>
-                    <a
-                      href={props.urls[key].url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      attached file{' '}
-                    </a>
-                  </li>
-                ))
-              : null}
-          </ol>
-          <input
-            type="file"
-            onChange={(e) => {
-              if (e.target.files[0])
-                uploadFiles(props.id, e.target.files[0], name);
-            }}
-          />
-          <hr />
-          <h3>Subtasks</h3>
-          <h5>click on Title to update status</h5>
-          <div>
+          <div className={s.column}>
+            <button
+              className={s.button}
+              onClick={() => props.setModalShow(false)}
+            >
+              Close
+            </button>
+            <ModalUpdateTodo id={props.id} />
             <ol>
-              {props.subtasks !== undefined
-                ? Object.keys(props.subtasks).map((key) => (
+              {props.urls !== undefined
+                ? Object.keys(props.urls).map((key) => (
                     <li key={key}>
-                      <p
-                        onClick={() =>
-                          HandleTodo.updateSubTask(name, props.id, key)
-                        }
+                      <a
+                        href={props.urls[key].url}
+                        target="_blank"
+                        rel="noopener noreferrer"
                       >
-                        {props.subtasks[key].title}
-                        {props.subtasks[key].completed ? '✅' : '❌'}
-                      </p>
-
-                      <p>{props.subtasks[key].description}</p>
+                        attached file{' '}
+                      </a>
                     </li>
                   ))
                 : null}
             </ol>
-            <button onClick={() => setIsAdding(true)}>Add subtask</button>
-            <hr />
+            <input
+              type="file"
+              style={{ color: 'transparent' }}
+              onChange={(e) => {
+                if (e.target.files[0])
+                  uploadFiles(props.id, e.target.files[0], name);
+              }}
+            />
+          </div>
+          <div className={s.column}>
+            <h3>Subtasks</h3>
+            <h5>click on Title to update status</h5>
             <div>
-              <h3>Comments</h3>
-              {isCommenting ? (
+              <ol>
+                {props.subtasks !== undefined
+                  ? Object.keys(props.subtasks).map((key) => (
+                      <li key={key}>
+                        <p
+                          onClick={() =>
+                            HandleTodo.updateSubTask(name, props.id, key)
+                          }
+                        >
+                          {props.subtasks[key].title}
+                          {props.subtasks[key].completed ? '✅' : '❌'}
+                        </p>
+
+                        <p>{props.subtasks[key].description}</p>
+                      </li>
+                    ))
+                  : null}
+              </ol>
+              {isAdding ? (
                 <form
+                  className={s.updateForm}
                   onSubmit={(e) => {
                     e.preventDefault();
-                    SubmitMessage(e, name, props.id);
+                    SubmitForm(e, name, props.id);
                   }}
                 >
                   <input
+                    className={s.modalInput}
                     style={{ height: '5px' }}
-                    placeholder="Комментарий"
-                    onChange={ChangeMessage}
-                    value={message}
+                    placeholder="Заголовок"
+                    onChange={ChangeTitle}
+                    value={title}
                   />
-                  <div>
-                    <button>Submit message</button>
-                  </div>
+                  <input
+                    className={s.modalInput}
+                    style={{ height: '5px' }}
+                    placeholder="Описание"
+                    onChange={ChangeDescription}
+                    value={description}
+                  />
+                  <span>
+                    <button>Save</button>
+                    <button onClick={() => setIsAdding(false)}>Close</button>
+                  </span>
                 </form>
-              ) : props.cascade !== undefined ? (
-                Object.keys(props.cascade).map((key, index) => (
-                  <p key={key} style={{ marginLeft: `${(index + 1) * 10}px` }}>
-                    {props.cascade[key].message}
-                  </p>
-                ))
-              ) : null}
+              ) : (
+                <button onClick={() => setIsAdding(true)}>Add subtask</button>
+              )}
             </div>
-            {isAdding ? (
+          </div>
+          <div className={s.column}>
+            <h3>Comments</h3>
+            {isCommenting ? (
               <form
+                className={s.updateForm}
                 onSubmit={(e) => {
                   e.preventDefault();
-                  SubmitForm(e, name, props.id);
+                  SubmitMessage(e, name, props.id);
                 }}
               >
                 <input
+                  className={s.modalInput}
                   style={{ height: '5px' }}
-                  placeholder="Заголовок"
-                  onChange={ChangeTitle}
-                  value={title}
+                  placeholder="Комментарий"
+                  onChange={ChangeMessage}
+                  value={message}
                 />
-                <input
-                  style={{ height: '5px' }}
-                  placeholder="Описание"
-                  onChange={ChangeDescription}
-                  value={description}
-                />
-                <span>
-                  <button>Save</button>
-                  <button onClick={() => setIsAdding(false)}>Close</button>
-                </span>
+
+                <button>Submit message</button>
               </form>
-            ) : (
-              <div>
-                <button onClick={() => setIsCommenting(!isCommenting)}>
-                  {isCommenting ? 'close Comment section' : 'Add comment'}
-                </button>
-                <hr />
-              </div>
-            )}
-            <ModalUpdateTodo id={props.id} />
+            ) : props.cascade !== undefined ? (
+              Object.keys(props.cascade).map((key, index) => (
+                <p key={key} style={{ marginLeft: `${(index + 1) * 10}px` }}>
+                  {props.cascade[key].message}
+                </p>
+              ))
+            ) : null}
+            <button onClick={() => setIsCommenting(!isCommenting)}>
+              {isCommenting ? 'Close' : 'Add comment'}
+            </button>
           </div>
         </div>
       ) : null}
