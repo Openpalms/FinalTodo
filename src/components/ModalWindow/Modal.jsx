@@ -3,9 +3,12 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { HandleTodo, uploadFiles } from '../../api/Todos';
 import { CreateSubtask, CreateComment } from '../../HadleChanges/TodoCreation';
+import ModalUpdateTodo from './ModalUpdateTodo';
+
 const Modal = (props) => {
   const { SubmitForm, ChangeTitle, ChangeDescription, title, description } =
     CreateSubtask();
+
   const { SubmitMessage, ChangeMessage, message } = CreateComment();
   const [isAdding, setIsAdding] = useState(false);
   const [isCommenting, setIsCommenting] = useState(false);
@@ -41,19 +44,30 @@ const Modal = (props) => {
           />
           <hr />
           <h3>Subtasks</h3>
+          <h5>click on Title to update status</h5>
           <div>
             <ol>
               {props.subtasks !== undefined
                 ? Object.keys(props.subtasks).map((key) => (
                     <li key={key}>
-                      <p>{props.subtasks[key].title}</p>
+                      <p
+                        onClick={() =>
+                          HandleTodo.updateSubTask(name, props.id, key)
+                        }
+                      >
+                        {props.subtasks[key].title}
+                        {props.subtasks[key].completed ? '✅' : '❌'}
+                      </p>
+
                       <p>{props.subtasks[key].description}</p>
                     </li>
                   ))
                 : null}
             </ol>
+            <button onClick={() => setIsAdding(true)}>Add subtask</button>
             <hr />
             <div>
+              <h3>Comments</h3>
               {isCommenting ? (
                 <form
                   onSubmit={(e) => {
@@ -105,13 +119,13 @@ const Modal = (props) => {
               </form>
             ) : (
               <div>
-                <hr />
-                <button onClick={() => setIsAdding(true)}>Add subtask</button>
                 <button onClick={() => setIsCommenting(!isCommenting)}>
                   {isCommenting ? 'close Comment section' : 'Add comment'}
                 </button>
+                <hr />
               </div>
             )}
+            <ModalUpdateTodo id={props.id} />
           </div>
         </div>
       ) : null}

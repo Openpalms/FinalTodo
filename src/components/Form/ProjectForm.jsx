@@ -6,8 +6,8 @@ const ProjectForm = () => {
   return (
     <div className={s.form}>
       <form onSubmit={SubmitForm}>
-        <input placeholder="Заголовок" onChange={ChangeTitle} value={title} />
-        <button>Добавить новый проект</button>
+        <input placeholder="Name" onChange={ChangeTitle} value={title} />
+        <button className={s.formButton}>Add new project </button>
       </form>
     </div>
   );

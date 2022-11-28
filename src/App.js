@@ -7,7 +7,7 @@ function App() {
   return (
     <Routes>
       <Route path={`project/:name`} element={<Col />} />
-      <Route path={``} element={<ProjectPage />} />
+      <Route path={`/`} element={<ProjectPage />} />
     </Routes>
   );
 }

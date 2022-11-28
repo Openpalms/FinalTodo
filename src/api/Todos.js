@@ -15,6 +15,11 @@ export const HandleTodo = {
       ...body,
     });
   },
+  updateSubTask(name, todoId, messageId) {
+    update(ref(bd, `${name}/${todoId}/subtasks/${messageId}`), {
+      completed: true,
+    });
+  },
   addNotRealyCascade(name, message, id) {
     set(ref(bd, `${name}/${id}/cascade/${new Date().getTime().toString()}`), {
       ...message,
@@ -24,8 +29,8 @@ export const HandleTodo = {
     remove(ref(bd, `${name}/${id}/`));
   },
 
-  updateTodo(name, body) {
-    update(ref(bd, `${name}/${body.id}/`), { ...body });
+  updateTodo(name, body, id) {
+    update(ref(bd, `${name}/${id}/`), { ...body });
   },
 
   updatePosition(x, y, name, id) {

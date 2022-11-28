@@ -30,17 +30,15 @@ const Col = () => {
         const before = dayjs(element.date).unix();
         const expiring = now - before >= 0;
 
-        HandleTodo.updateTodo(name, {
-          id: element.id,
-          expiring: expiring,
-        });
+        HandleTodo.updateTodo(name, { expiring: expiring }, element.id);
       }
     });
   }, [todos, name]);
-
+  const [query, setQuery] = useState('');
   return (
     <>
-      <Form />
+      <Form setQuery={setQuery} query={query} />
+
       <div
         style={{
           display: 'flex',
@@ -51,9 +49,17 @@ const Col = () => {
         <div className="col">
           <div>Queue</div>
           {todos &&
-            todos.map((item) =>
-              typeof item === 'object' ? <Item key={item.id} {...item} /> : null
-            )}
+            todos
+              .filter((item) =>
+                typeof item === 'object'
+                  ? item.title.toLowerCase().includes(query)
+                  : null
+              )
+              .map((item, taskNumber) =>
+                typeof item === 'object' ? (
+                  <Item taskNumber={taskNumber + 1} key={item.id} {...item} />
+                ) : null
+              )}
         </div>
         <div className="col">
           <div>Development</div>

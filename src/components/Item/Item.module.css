@@ -1,0 +1,14 @@
+.card {
+  border: 5px solid lightgreen;
+  background-color: #fff;
+  border-radius: 20px;
+  text-align: center;
+  width: 50%;
+}
+.expired {
+  border: 5px solid red;
+  background-color: #fff;
+  border-radius: 20px;
+  text-align: center;
+  width: 50%;
+}
