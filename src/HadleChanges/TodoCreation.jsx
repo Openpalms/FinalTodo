@@ -104,3 +104,26 @@ export const CreateSubtask = () => {
     description,
   };
 };
+export const CreateComment = () => {
+  const [message, setMessage] = useState('');
+  const SubmitMessage = (e, name, id) => {
+    e.preventDefault();
+    const newMessage = {
+      message,
+    };
+
+    HandleTodo.addNotRealyCascade(name, newMessage, id);
+
+    setMessage('');
+  };
+
+  const ChangeMessage = (event) => {
+    setMessage(event.target.value);
+  };
+
+  return {
+    SubmitMessage,
+    ChangeMessage,
+    message,
+  };
+};

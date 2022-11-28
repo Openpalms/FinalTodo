@@ -15,12 +15,14 @@ export const HandleTodo = {
       ...body,
     });
   },
+  addNotRealyCascade(name, message, id) {
+    set(ref(bd, `${name}/${id}/cascade/${new Date().getTime().toString()}`), {
+      ...message,
+    });
+  },
   deleteTodo(name, id) {
     remove(ref(bd, `${name}/${id}/`));
   },
-  // deleteTodo(id) {
-  //   remove(ref(bd, id));
-  // },
 
   updateTodo(name, body) {
     update(ref(bd, `${name}/${body.id}/`), { ...body });

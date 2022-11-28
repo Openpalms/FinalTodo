@@ -1,6 +1,8 @@
+import ModalForm from '../ModalWindow/ModalForm';
 import { useParams } from 'react-router-dom';
 import { CreateTodo } from '../../HadleChanges/TodoCreation';
 import s from './Form.module.css';
+import { useState } from 'react';
 
 const Form = () => {
   const {
@@ -16,9 +18,12 @@ const Form = () => {
     priority,
   } = CreateTodo();
   const { name } = useParams();
+  const [isShowing, setIsShowing] = useState(false);
   return (
     <div className={s.form}>
-      <form onSubmit={(e) => SubmitForm(e, name)}>
+      <button onClick={() => setIsShowing(!isShowing)}>Добавить дело</button>
+      <ModalForm isShowing={isShowing} setIsShowing={setIsShowing} />
+      {/* <form onSubmit={(e) => SubmitForm(e, name)}>
         <input placeholder="Заголовок" onChange={ChangeTitle} value={title} />
         <input
           placeholder="Описание"
@@ -36,7 +41,7 @@ const Form = () => {
         <input type="date" onChange={ChangeDate} value={date} />
 
         <button>Добавить дело</button>
-      </form>
+      </form> */}
     </div>
   );
 };
